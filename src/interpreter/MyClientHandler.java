@@ -8,16 +8,12 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
-import java.util.stream.Collectors;
+
 public class MyClientHandler implements ClientHandler {
 
 	@Override
 	public void handleClient(InputStream input, OutputStream output) {
-		// TODO Auto-generated method stub
 		BufferedReader in = new BufferedReader(new InputStreamReader(input));
 		PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(output)), true);
 		try {
