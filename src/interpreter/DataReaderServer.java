@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class MySerialServer implements Server {
+public class DataReaderServer implements Server {
 
 	private boolean stop;
 	
@@ -23,7 +23,9 @@ public class MySerialServer implements Server {
 		ServerSocket server = new ServerSocket(port);
 		while (!stop) {
 			try {
+				System.out.println("server is up");
 				Socket socket = server.accept();
+				System.out.println("client connected");
 				clientHandler.handleClient(socket.getInputStream(), socket.getOutputStream());
 				
 				socket.close();
