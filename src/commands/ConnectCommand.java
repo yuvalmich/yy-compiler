@@ -7,7 +7,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 
-public class Connect implements Command {
+public class ConnectCommand implements Command {
 
 	@Override
 	public void execute() {

@@ -4,7 +4,7 @@ import utils.ClientHandler;
 import utils.DataReaderServer;
 import utils.MyClientHandler;
 
-public class OpenDataServer implements Command {
+public class OpenDataServerCommand implements Command {
 
 	@Override
 	public void execute() {

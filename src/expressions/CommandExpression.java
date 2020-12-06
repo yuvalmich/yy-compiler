@@ -5,7 +5,7 @@ import commands.Command;
 public class CommandExpression implements Expression {
 	private Command c;
 	
-	public void ctor(Command c) {
+	public CommandExpression(Command c) {
 		this.c = c;
 	}
 	
