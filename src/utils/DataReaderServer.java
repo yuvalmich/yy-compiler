@@ -1,4 +1,4 @@
-package interpreter;
+package utils;
 
 import java.io.IOException;
 import java.net.ServerSocket;

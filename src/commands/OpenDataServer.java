@@ -1,8 +1,8 @@
 package commands;
 
-import interpreter.ClientHandler;
-import interpreter.DataReaderServer;
-import interpreter.MyClientHandler;
+import utils.ClientHandler;
+import utils.DataReaderServer;
+import utils.MyClientHandler;
 
 public class OpenDataServer implements Command {
 
