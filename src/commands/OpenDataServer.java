@@ -13,5 +13,4 @@ public class OpenDataServer implements Command {
 		
 		server.open(5400, c);
 	}
-
 }

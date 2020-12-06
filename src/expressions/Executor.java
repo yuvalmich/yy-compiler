@@ -5,28 +5,29 @@ import java.util.Queue;
 import java.util.Stack;
 
 public class Executor {
-	public static double calc(String[] expressions){
+	public static double calc(String expression){
 		Queue<String> queue = new LinkedList<String>();
 		Stack<String> stack = new Stack<String>();
 		Stack<Expression> stackExp = new Stack<Expression>();
 		
-		for (String exp : expressions){
-			if (isDouble(exp)){
-				queue.add(exp);
+		String[] split = expression.split("(?<=[-+*/()])|(?=[-+*/()])");
+		for (String s : split){
+			if (isDouble(s)){
+				queue.add(s);
 			}
 			else{
-				switch(exp) {
+				switch(s) {
 			    case "/":
 			    case "*":
 			    case "(":
-			        stack.push(exp);
+			        stack.push(s);
 			        break;
 			    case "+":
 			    case "-":
 			    	while (!stack.empty() && (!stack.peek().equals("("))){
 			    		queue.add(stack.pop());
 			    	}
-			        stack.push(exp);
+			        stack.push(s);
 			        break;
 			    case ")":
 			    	while (!stack.peek().equals("(")){
