@@ -10,9 +10,14 @@ import java.util.concurrent.Callable;
 
 import expressions.Executor;
 import expressions.Expression;
+import utils.SimulatorConnector;
 
 public class ConnectCommand implements Command {
 
+	private BufferedReader in = null;
+	private PrintWriter out = null;
+	private Socket s = null;
+	
 	@Override
 	public void execute(Callable<String> getNextParam) {
 		try {
@@ -33,36 +38,19 @@ public class ConnectCommand implements Command {
 	}	
 	
 	public void connect(String address, int port) {
-		Socket s=null;
-		PrintWriter out=null;
-		BufferedReader in=null;
 		try{
 			s = new Socket(address, port);
 			s.setSoTimeout(10000);
 			out=new PrintWriter(s.getOutputStream());
 			in=new BufferedReader(new InputStreamReader(s.getInputStream()));
 			
-			out.println("set controls/flight/rudder 1");
-			System.out.println("yay");
-			out.flush();
-			String usol=in.readLine();
-			System.out.println(usol);
-			
+			SimulatorConnector.initConnection(in, out, s);
 		}catch(SocketTimeoutException e){
 			System.out.println("\tYour Server takes over 3 seconds to answer");
 		}catch(IOException e){
 			System.out.println("\tYour Server ran into some IOException");
 		}catch(Exception e){
 			System.out.println("\texception");
-		} finally{
-			try {
-				in.close();
-				out.close();
-				s.close();
-			} catch (IOException e) {
-				System.out.println("\tYour Server ran into some IOException");
-			}
 		}
-		
 	}
 }
