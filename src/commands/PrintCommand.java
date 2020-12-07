@@ -8,7 +8,17 @@ public class PrintCommand implements Command {
 
 	@Override
 	public void execute(Callable<String> getNextParam) {
-		// TODO Auto-generated method stub
+		try {
+			String message = getNextParam.call();
+			
+			System.out.println(message);
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 		
 	}
 
