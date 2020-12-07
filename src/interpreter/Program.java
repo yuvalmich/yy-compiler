@@ -32,7 +32,7 @@ public class Program {
 				"throttle = 1\r\n" + 
 				"var h0 = heading\r\n" + 
 				"while alt < 1000 {\r\n" + 
-				"rudder = (h0 – heading)/20\r\n" + 
+				"rudder = (h0 - heading)/20\r\n" + 
 				"aileron = - roll / 70\r\n" + 
 				"elevator = pitch / 50\r\n" + 
 				"print alt\r\n" + 
@@ -40,7 +40,12 @@ public class Program {
 				"}\r\n" + 
 				"print \"done\"\r\n" + 
 				"";
+		
+		System.out.println("Begin");
+		
 		Lexer lexer = new Lexer();
+		var expressions = lexer.lexer("print alt\r\n");
+		
 		Parser parser = new Parser();
 		
 		parser.parse(lexer.lexer(exampleCode));
