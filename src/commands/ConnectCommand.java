@@ -6,11 +6,14 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
+import java.util.concurrent.Callable;
+
+import expressions.Expression;
 
 public class ConnectCommand implements Command {
 
 	@Override
-	public void execute() {
+	public void execute(Callable<String> getNextParam) {
 		Socket s=null;
 		PrintWriter out=null;
 		BufferedReader in=null;
