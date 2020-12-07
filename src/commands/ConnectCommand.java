@@ -15,15 +15,28 @@ public class ConnectCommand implements Command {
 
 	@Override
 	public void execute(Callable<String> getNextParam) {
+		try {
+			String address = getNextParam.call();
+			int port = (int) Executor.calc(getNextParam.call());
+			
+			new Thread(() -> {
+				try {
+					connect(address, port);
+				} catch (Exception e) {e.printStackTrace();}
+			}).start();
+			
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+	}	
+	
+	public void connect(String address, int port) {
 		Socket s=null;
 		PrintWriter out=null;
 		BufferedReader in=null;
 		try{
-			
-			String address = getNextParam.call();
-			int port = (int) Executor.calc(getNextParam.call());
-			
-			
 			s = new Socket(address, port);
 			s.setSoTimeout(10000);
 			out=new PrintWriter(s.getOutputStream());
