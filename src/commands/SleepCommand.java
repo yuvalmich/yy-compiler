@@ -1,6 +1,6 @@
 package commands;
 
-public class SetCommand implements Command {
+public class SleepCommand implements Command {
 
 	@Override
 	public void execute() {
