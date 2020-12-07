@@ -2,6 +2,7 @@ package commands;
 
 import java.util.concurrent.Callable;
 
+import expressions.Executor;
 import expressions.Expression;
 import utils.ClientHandler;
 import utils.DataReaderServer;
@@ -14,6 +15,15 @@ public class OpenDataServerCommand implements Command {
 		DataReaderServer server = new DataReaderServer();
 		ClientHandler c = new MyClientHandler();
 		
-		server.open(5400, c);
+		try {
+			int port = (int) Executor.calc(getNextParam.call());
+			int hrz = (int) Executor.calc(getNextParam.call());
+			
+			server.open(port, c);
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
