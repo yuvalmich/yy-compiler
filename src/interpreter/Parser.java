@@ -11,32 +11,41 @@ import commands.PrintCommand;
 import commands.SleepCommand;
 import expressions.CommandExpression;
 import expressions.Expression;
+import expressions.ExpressionsIterator;
 
 public class Parser {
-	private HashMap<String, Expression> map = new HashMap<String, Expression>() {{
-		put("bind", new CommandExpression(new BindCommand()));
-		put("connect", new CommandExpression(new ConnectCommand()));
-		put("openDataServer", new CommandExpression(new OpenDataServerCommand()));
-		put("print", new CommandExpression(new PrintCommand()));
-		put("sleep", new CommandExpression(new SleepCommand()));
-		put("=", new CommandExpression(new AssignCommand()));
-		put("var", new CommandExpression(new DeclareCommand()));
-		// TODO: change it to condition command after implementation!!!!!!!
-		put("if", new CommandExpression(new SleepCommand()));
-		put("while", new CommandExpression(new SleepCommand()));
-	}};
+	private ExpressionsIterator iter;
+	private HashMap<String, Expression> map;
 	
-	public void parse(String[] lexerOutput) {
-		int index = 0;
-		Expression exp = map.get(lexerOutput[index]);
-		
-		while (index < lexerOutput.length) {
-			if (exp == null) {
+	Parser(String[] expressions) {
+		iter = new ExpressionsIterator(expressions);
+		this.map = new HashMap<String, Expression>() {{
+			put("bind", new CommandExpression(new BindCommand(), iter));
+			put("connect", new CommandExpression(new ConnectCommand(), iter));
+			put("openDataServer", new CommandExpression(new OpenDataServerCommand(), iter));
+			put("print", new CommandExpression(new PrintCommand(), iter));
+			put("sleep", new CommandExpression(new SleepCommand(), iter));
+			put("=", new CommandExpression(new AssignCommand(), iter));
+			put("var", new CommandExpression(new DeclareCommand(), iter));
+			// TODO: change it to condition command after implementation!!!!!!!
+			put("if", new CommandExpression(new SleepCommand(), iter));
+			put("while", new CommandExpression(new SleepCommand(), iter));
+		}};
+	}
+	
+	public void parse() {
+		while (iter.hasNext()) {
+			String command = this.iter.getNext();
+			System.out.println(command);
+			Expression exp = map.get(command);
+			if (exp == null && iter.hasNext() && this.iter.peekNext().equals("=")) {
+				exp = map.get(this.iter.HandleAssign());
+			} else if (exp == null) {
 				System.out.println("Error! could not read command");
 				return;
 			}
 			
-			index += exp.calculate();
+			exp.calculate();
 		}
 	}
 }

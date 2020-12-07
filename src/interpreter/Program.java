@@ -46,8 +46,11 @@ public class Program {
 		Lexer lexer = new Lexer();
 		var expressions = lexer.lexer("print alt\r\n");
 		
-		Parser parser = new Parser();
 		
-		parser.parse(lexer.lexer(exampleCode));
+		String[] lexerMock = {"connect", "127.0.0.1", "5402"};
+		
+		Parser parser = new Parser(lexerMock);
+		
+		parser.parse();
 	}
 }

@@ -1,5 +1,8 @@
 package commands;
 
+import java.util.concurrent.Callable;
+
+import expressions.Expression;
 import utils.ClientHandler;
 import utils.DataReaderServer;
 import utils.MyClientHandler;
@@ -7,7 +10,7 @@ import utils.MyClientHandler;
 public class OpenDataServerCommand implements Command {
 
 	@Override
-	public void execute() {
+	public void execute(Callable<String> getNextParam) {
 		DataReaderServer server = new DataReaderServer();
 		ClientHandler c = new MyClientHandler();
 		
