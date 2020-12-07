@@ -1,24 +1,36 @@
 package expressions;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
 
 public class Executor {
+	static HashMap<String, String> parameters;
+	
 	public static double calc(String expression){
 		Queue<String> queue = new LinkedList<String>();
 		Stack<String> stack = new Stack<String>();
 		Stack<Expression> stackExp = new Stack<Expression>();
+		parameters = new HashMap<String, String>();
+		parameters.put("h0", "15");
+		parameters.put("heading", "30");
 		
-		String[] split = expression.split("(?<=[-+*/()])|(?=[-+*/()])");
+		String[] split = expression.split("(?<=[-+*/()<>])|(?=[-+*/()<>])");
 		for (String s : split){
 			if (isDouble(s)){
 				queue.add(s);
+			}
+			if (isParameter(s))
+			{
+				queue.add(parameters.get(s));
 			}
 			else{
 				switch(s) {
 			    case "/":
 			    case "*":
+			    case "<":
+			    case ">":
 			    case "(":
 			        stack.push(s);
 			        break;
@@ -36,6 +48,7 @@ public class Executor {
 			    	stack.pop();
 			        break;
 				}
+				
 			}
 		}
 		while(!stack.isEmpty()){
@@ -57,6 +70,12 @@ public class Executor {
 			    case "*":
 			    	stackExp.push(new Mul(left, right));
 			        break;
+			    case "<":
+			    	stackExp.push(new Smaller(left, right));
+			        break;
+			    case ">":
+			    	stackExp.push(new Bigger(left, right));
+			        break;
 			    case "+":
 			    	stackExp.push(new Plus(left, right));
 			        break;
@@ -77,5 +96,10 @@ public class Executor {
 		} catch (NumberFormatException e) {
 			return false;
 		}
+	}
+	
+	private static boolean isParameter(String val)
+	{
+		return parameters.containsKey(val);
 	}
 }
