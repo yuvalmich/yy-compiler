@@ -8,6 +8,7 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.util.concurrent.Callable;
 
+import expressions.Executor;
 import expressions.Expression;
 
 public class ConnectCommand implements Command {
@@ -18,7 +19,12 @@ public class ConnectCommand implements Command {
 		PrintWriter out=null;
 		BufferedReader in=null;
 		try{
-			s=new Socket("127.0.0.1",5402);
+			
+			String address = getNextParam.call();
+			int port = (int) Executor.calc(getNextParam.call());
+			
+			
+			s = new Socket(address, port);
 			s.setSoTimeout(10000);
 			out=new PrintWriter(s.getOutputStream());
 			in=new BufferedReader(new InputStreamReader(s.getInputStream()));
@@ -33,7 +39,9 @@ public class ConnectCommand implements Command {
 			System.out.println("\tYour Server takes over 3 seconds to answer");
 		}catch(IOException e){
 			System.out.println("\tYour Server ran into some IOException");
-		}finally{
+		}catch(Exception e){
+			System.out.println("\texception");
+		} finally{
 			try {
 				in.close();
 				out.close();
@@ -44,5 +52,4 @@ public class ConnectCommand implements Command {
 		}
 		
 	}
-
 }

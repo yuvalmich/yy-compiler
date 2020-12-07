@@ -35,10 +35,12 @@ public class Parser {
 	
 	public void parse() {
 		while (iter.hasNext()) {
-			Expression exp = map.get(this.iter.getNext());
+			String command = this.iter.getNext();
+			System.out.println(command);
+			Expression exp = map.get(command);
 			if (exp == null && iter.hasNext() && this.iter.peekNext().equals("=")) {
 				exp = map.get(this.iter.HandleAssign());
-			} else {
+			} else if (exp == null) {
 				System.out.println("Error! could not read command");
 				return;
 			}
