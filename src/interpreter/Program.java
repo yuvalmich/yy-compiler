@@ -41,7 +41,7 @@ public class Program {
 		Lexer lexer = new Lexer();
 		var expressions = lexer.lexer(exampleCode);
 		
-		System.out.println(expressions);
+		System.out.println(Arrays.toString(expressions));
 		
 		Parser parser = new Parser(expressions);
 		
