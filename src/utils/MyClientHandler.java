@@ -10,7 +10,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 
 public class MyClientHandler implements ClientHandler {
-
+	public static boolean stop;
 	String[] simNames = {
 		"simX", "simY", "simZ"
 	};
@@ -21,11 +21,13 @@ public class MyClientHandler implements ClientHandler {
 		PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(output)), true);
 
 		try {
-			while(true) {
+			while(!stop) {
+				System.out.println("HERE");
 				String[] paramsValues = in.readLine().split(",");
 				
 				for (int i = 0; i < paramsValues.length; i++) {
 					this.updateSimIfBind(this.simNames[i], 	Double.parseDouble(paramsValues[i]));
+//					System.out.println(this.simNames[i] + " value is " + Double.parseDouble(paramsValues[i]));
 				}
 			}
 		} catch (IOException e) {
@@ -43,7 +45,7 @@ public class MyClientHandler implements ClientHandler {
 
 	private void updateSimIfBind(String simName, double simVal) {
 		if (VarBindings.simVars.containsKey(simName)) {
-			System.out.println("update: " + simName + " with value " + simVal);
+			//System.out.println("update: " + simName + " with value " + simVal);
 			VarBindings.simVars.get(simName).value = simVal;
 		}
 	}

@@ -3,6 +3,7 @@ package utils;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.concurrent.TimeUnit;
 
 public class DataReaderServer implements Server {
 
@@ -20,25 +21,21 @@ public class DataReaderServer implements Server {
 	}
 	
 	private void runServer(int port, ClientHandler clientHandler) throws Exception {
-		ServerSocket server = new ServerSocket(port);
-		while (!stop) {
-			try {
-				System.out.println("server is up");
-				Socket socket = server.accept();
-				System.out.println("client connected");
-				clientHandler.handleClient(socket.getInputStream(), socket.getOutputStream());
-				
-				socket.close();
-				
-			} catch (Exception e) {e.printStackTrace();}
-			
-		}
-		server.close();
+		try {
+			MyClientHandler.stop = false;
+			ServerSocket server = new ServerSocket(port);
+			System.out.println("server is up");
+			Socket socket = server.accept();
+			System.out.println("client connected");
+			clientHandler.handleClient(socket.getInputStream(), socket.getOutputStream());
+//			socket.close();
+			server.close();
+		} catch (Exception e) {e.printStackTrace();}
 	}
 
 	@Override
 	public void stop() {
-		stop = true;
+		MyClientHandler.stop = true;
 	}
 
 }

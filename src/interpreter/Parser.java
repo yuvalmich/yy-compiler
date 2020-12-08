@@ -1,6 +1,7 @@
 package interpreter;
 
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 import commands.AssignCommand;
 import commands.BindCommand;
@@ -55,7 +56,12 @@ public class Parser {
 				System.out.println("Error! could not read command");
 				
 			}
-
+			try {
+				TimeUnit.MILLISECONDS.sleep(200);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			exp.calculate();
 		}
 		

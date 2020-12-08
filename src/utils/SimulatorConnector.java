@@ -24,14 +24,12 @@ public class SimulatorConnector {
 			if (isInitialized) {
 				// example: "set controls/flight/rudder 1"
 				out.println(command);
-				System.out.println("yay");
+				//System.out.println("yay");
 				out.flush();
-				String usol = in.readLine();
-				System.out.println(usol);
 			} else {
 				System.out.println("error - socket is closed");
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

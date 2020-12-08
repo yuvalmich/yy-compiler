@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
 import utils.VarBindings;
@@ -29,6 +30,13 @@ public class Executor {
 			}
 			if (isParameter(s))
 			{
+				try {
+					TimeUnit.SECONDS.sleep(1);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				System.out.println("YUVALL " + VarBindings.programVars.get(s).value);
 				queue.add(String.valueOf(VarBindings.programVars.get(s).value));
 			}
 			else{

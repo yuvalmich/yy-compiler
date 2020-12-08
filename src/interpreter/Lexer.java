@@ -15,6 +15,8 @@ public class Lexer {
 		m_Commands = new ArrayList<String>();
 		m_Commands.add("bind");
 		m_Commands.add("connect");
+		m_Commands.add("return");
+		m_Commands.add("disconnect");
 		m_Commands.add("openDataServer");
 		m_Commands.add("print");
 		m_Commands.add("sleep");
@@ -36,8 +38,9 @@ public class Lexer {
 		
 		m_ExpressionsList.add(m_Expression);
 		
-		String[] expressionsArray = new String[m_ExpressionsList.size()];
+		
 		organizeExpressionsArray();
+		String[] expressionsArray = new String[m_ExpressionsList.size()];
 		return m_ExpressionsList.toArray(expressionsArray);
 	}
 	
@@ -59,6 +62,16 @@ public class Lexer {
 		
 		int endIndex = s.length();
 		String subString = s;
+		
+		if(subString.contains("=") && subString.length() > 1) {
+			var eqSplits = subString.split("=");
+			initialize(eqSplits[0]);
+			m_ExpressionsList.add(m_Expression);
+			m_ExpressionsList.add("=");
+			m_Expression = "";
+			initialize(eqSplits[1]);
+			return;
+		}
 		
 		boolean isSubCommand = isCommand(subString);
 		
@@ -98,7 +111,7 @@ public class Lexer {
 	private boolean isOperator(char c)
 	{
 		// handle == !!!!!
-		return "/*()+-–<>".indexOf(c) != -1;
+		return "/*()+-ï¿½<>".indexOf(c) != -1;
 	}
 	
 	private boolean isCommand(String val)
