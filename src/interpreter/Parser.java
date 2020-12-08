@@ -6,9 +6,11 @@ import commands.AssignCommand;
 import commands.BindCommand;
 import commands.ConnectCommand;
 import commands.DeclareCommand;
+import commands.IfCommand;
 import commands.OpenDataServerCommand;
 import commands.PrintCommand;
 import commands.SleepCommand;
+import commands.WhileCommand;
 import expressions.CommandExpression;
 import expressions.Expression;
 import expressions.ExpressionsIterator;
@@ -16,9 +18,11 @@ import expressions.ExpressionsIterator;
 public class Parser {
 	private ExpressionsIterator iter;
 	private HashMap<String, Expression> map;
+	private String[] m_Expressions;
 	
-	Parser(String[] expressions) {
-		iter = new ExpressionsIterator(expressions);
+	public Parser(String[] expressions) {
+		m_Expressions = expressions;
+		
 		this.map = new HashMap<String, Expression>() {{
 			put("bind", new CommandExpression(new BindCommand(), iter));
 			put("connect", new CommandExpression(new ConnectCommand(), iter));
@@ -27,13 +31,14 @@ public class Parser {
 			put("sleep", new CommandExpression(new SleepCommand(), iter));
 			put("=", new CommandExpression(new AssignCommand(), iter));
 			put("var", new CommandExpression(new DeclareCommand(), iter));
-			// TODO: change it to condition command after implementation!!!!!!!
-			put("if", new CommandExpression(new SleepCommand(), iter));
-			put("while", new CommandExpression(new SleepCommand(), iter));
+			put("if", new CommandExpression(new IfCommand(), iter));
+			put("while", new CommandExpression(new WhileCommand(), iter));
 		}};
 	}
 	
 	public void parse() {
+		iter = new ExpressionsIterator(m_Expressions);
+		
 		while (iter.hasNext()) {
 			String command = this.iter.getNext();
 			System.out.println(command);
