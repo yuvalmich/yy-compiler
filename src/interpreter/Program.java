@@ -31,25 +31,17 @@ public class Program {
 				"breaks = 0\r\n" + 
 				"throttle = 1\r\n" + 
 				"var h0 = heading\r\n" + 
-				"while alt < 1000 {\r\n" + 
-				"rudder = (h0 - heading)/20\r\n" + 
-				"aileron = - roll / 70\r\n" + 
-				"elevator = pitch / 50\r\n" + 
-				"print alt\r\n" + 
-				"sleep 250\r\n" + 
-				"}\r\n" + 
-				"print \"done\"\r\n" + 
 				"";
 		
-		System.out.println("Begin");
+		
+		String easierCode = "openDataServer 5400 10\r\n";
 		
 		Lexer lexer = new Lexer();
-		var expressions = lexer.lexer("print alt\r\n");
+		var expressions = lexer.lexer(easierCode);
 		
+		System.out.println(expressions);
 		
-		String[] lexerMock = {"connect", "127.0.0.1", "5402"};
-		
-		Parser parser = new Parser(lexerMock);
+		Parser parser = new Parser(expressions);
 		
 		parser.parse();
 	}

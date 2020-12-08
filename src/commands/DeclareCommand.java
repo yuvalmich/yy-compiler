@@ -26,7 +26,7 @@ public class DeclareCommand implements Command {
 				return;
 			}
 			
-			VarBindings.programVars.put(varName, new BindValue(0));
+			VarBindings.programVars.put(varName, new BindValue());
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

@@ -1,10 +1,9 @@
 package utils;
 
 public class BindValue {
-	public int value;
+	public Double value;
 	public String sim;
 	
-	public BindValue(int value) {
-		this.value = value;
+	public BindValue() {
 	}
 }

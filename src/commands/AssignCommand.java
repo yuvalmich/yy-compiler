@@ -27,7 +27,7 @@ public class AssignCommand implements Command {
 		
 		try {
 			String varName = getNextParam.call();
-			int varValue = (int) Executor.calc(getNextParam.call());
+			double varValue = Executor.calc(getNextParam.call());
 			
 			if (!VarBindings.programVars.containsKey(varName)) {
 				System.out.println("Error! - the var you want to bind is not declared");

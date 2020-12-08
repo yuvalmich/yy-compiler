@@ -45,6 +45,9 @@ public class ConnectCommand implements Command {
 			in=new BufferedReader(new InputStreamReader(s.getInputStream()));
 			
 			SimulatorConnector.initConnection(in, out, s);
+			
+			while(true);
+			
 		}catch(SocketTimeoutException e){
 			System.out.println("\tYour Server takes over 3 seconds to answer");
 		}catch(IOException e){

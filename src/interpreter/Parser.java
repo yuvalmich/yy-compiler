@@ -37,15 +37,13 @@ public class Parser {
 		while (iter.hasNext()) {
 			String command = this.iter.getNext();
 			System.out.println(command);
-			System.out.println("bla");
 			Expression exp = map.get(command);
-			if (exp == null && iter.hasNext() && this.iter.peekNext().equals("=")) {
-				exp = map.get(this.iter.HandleAssign());
-			} else if (exp == null) {
+			if (exp == null) {
 				System.out.println("Error! could not read command");
 				return;
 			}
-			
+
+			System.out.println("Execute " + exp.getClass().getName());
 			exp.calculate();
 		}
 	}

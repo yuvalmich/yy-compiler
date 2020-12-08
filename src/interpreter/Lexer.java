@@ -116,6 +116,7 @@ public class Lexer {
 			var currExpression = m_ExpressionsList.get(index);
 			tmpExpressionsList.add(currExpression);
 			
+			// var a =
 			if (currExpression.contentEquals("var") && index + 2 < listSize &&
 					m_ExpressionsList.get(index + 2).contentEquals("="))
 			{
@@ -123,12 +124,13 @@ public class Lexer {
 				tmpExpressionsList.add(m_ExpressionsList.get(index));
 				tmpExpressionsList.add(m_ExpressionsList.get(index));
 			}
+			// a = bind "b"
 			else if (currExpression.contentEquals("=") && 
 					m_ExpressionsList.get(index + 1).contentEquals("bind"))
 			{
 				index++;
-				tmpExpressionsList.remove(tmpExpressionsList.size() - 1);
-				tmpExpressionsList.add(m_ExpressionsList.get(index));
+				tmpExpressionsList.remove(tmpExpressionsList.size() - 1); // delete =
+				tmpExpressionsList.add(m_ExpressionsList.get(index)); // add bind
 			}
 		}
 		
