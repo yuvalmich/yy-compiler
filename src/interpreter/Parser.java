@@ -22,7 +22,10 @@ public class Parser {
 	
 	public Parser(String[] expressions) {
 		m_Expressions = expressions;
-		
+	}
+	
+	public void parse() {
+		iter = new ExpressionsIterator(m_Expressions);
 		this.map = new HashMap<String, Expression>() {{
 			put("bind", new CommandExpression(new BindCommand(), iter));
 			put("connect", new CommandExpression(new ConnectCommand(), iter));
@@ -34,21 +37,17 @@ public class Parser {
 			put("if", new CommandExpression(new IfCommand(), iter));
 			put("while", new CommandExpression(new WhileCommand(), iter));
 		}};
-	}
-	
-	public void parse() {
-		iter = new ExpressionsIterator(m_Expressions);
+		
 		
 		while (iter.hasNext()) {
 			String command = this.iter.getNext();
-			System.out.println(command);
+			System.out.println("execute " + command);
 			Expression exp = map.get(command);
 			if (exp == null) {
 				System.out.println("Error! could not read command");
 				return;
 			}
 
-			System.out.println("Execute " + exp.getClass().getName());
 			exp.calculate();
 		}
 	}

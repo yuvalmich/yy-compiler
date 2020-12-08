@@ -98,7 +98,7 @@ public class Lexer {
 	private boolean isOperator(char c)
 	{
 		// handle == !!!!!
-		return "/*()+-â€“<>".indexOf(c) != -1;
+		return "/*()+-–<>".indexOf(c) != -1;
 	}
 	
 	private boolean isCommand(String val)

@@ -13,10 +13,6 @@ public class Program {
 
 	public static void main(String[] args) {
 		System.out.println("start");
-//		DataReaderServer server = new DataReaderServer();
-//		ClientHandler c = new MyClientHandler();
-		
-//		server.open(5400, c);
 		
 		String exampleCode = "openDataServer 5400 10\r\n" + 
 				"connect 127.0.0.1 5402\r\n" + 
@@ -33,8 +29,16 @@ public class Program {
 				"breaks = 0\r\n" + 
 				"throttle = 1\r\n" + 
 				"rudder = -1\r\n" +
+				"heading = 1\r\n" +
 				"var h0 = heading\r\n" + 
-				"";
+				"while alt < 1000 {\r\n" + 
+				"rudder = (h0 – heading)/20\r\n" + 
+				"aileron = - roll / 70\r\n" + 
+				"elevator = pitch / 50\r\n" + 
+				"print alt\r\n" + 
+				"sleep 250\r\n" + 
+				"}\r\n" + 
+				"print \"done\"";
 		
 		Lexer lexer = new Lexer();
 		var expressions = lexer.lexer(exampleCode);

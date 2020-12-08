@@ -11,11 +11,12 @@ public abstract class ContidionParser implements Command {
 	{
 		try {
 			List<String> expressions = new ArrayList<String>();
+			getNextParam.call();
 			var expression = getNextParam.call();
-			while (expression.contentEquals("}"))
+			while (!expression.contentEquals("}"))
 			{
-				expression = getNextParam.call();
 				expressions.add(expression);
+				expression = getNextParam.call();
 			}
 		
 			String[] expressionsArray = new String[expressions.size()];

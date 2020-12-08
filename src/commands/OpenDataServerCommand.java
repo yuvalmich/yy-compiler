@@ -1,6 +1,7 @@
 package commands;
 
 import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 
 import expressions.Executor;
 import expressions.Expression;
@@ -20,6 +21,10 @@ public class OpenDataServerCommand implements Command {
 			int hrz = (int) Executor.calc(getNextParam.call());
 			
 			server.open(port, c);
+			
+			System.out.println("going to sleep");
+			TimeUnit.SECONDS.sleep(20);
+			System.out.println("good morning");
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
