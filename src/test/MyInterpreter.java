@@ -18,8 +18,6 @@ public class MyInterpreter {
 		
 		Parser parser = new Parser(expressions);
 		
-		parser.parse();
-		
-		return 0;
+		return parser.parse();
 	}
 }

@@ -32,7 +32,7 @@ public class Program {
 //				"heading = 1\r\n" +
 //				"var h0 = heading\r\n" + 
 //				"while alt < 1000 {\r\n" + 
-//				"rudder = (h0 – heading)/20\r\n" + 
+//				"rudder = (h0 ï¿½ heading)/20\r\n" + 
 //				"aileron = - roll / 70\r\n" + 
 //				"elevator = pitch / 50\r\n" + 
 //				"print alt\r\n" + 
