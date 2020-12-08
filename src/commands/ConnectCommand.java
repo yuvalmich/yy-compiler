@@ -24,13 +24,14 @@ public class ConnectCommand implements Command {
 			String address = getNextParam.call();
 			int port = (int) Executor.calc(getNextParam.call());
 			
-			new Thread(() -> {
+			var t = new Thread(() -> {
 				try {
 					connect(address, port);
 				} catch (Exception e) {e.printStackTrace();}
-			}).start();
+			});
 			
-			
+			t.start();
+			t.join();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -40,13 +41,13 @@ public class ConnectCommand implements Command {
 	public void connect(String address, int port) {
 		try{
 			s = new Socket(address, port);
-			s.setSoTimeout(10000);
+			
 			out=new PrintWriter(s.getOutputStream());
 			in=new BufferedReader(new InputStreamReader(s.getInputStream()));
 			
 			SimulatorConnector.initConnection(in, out, s);
 			
-			while(true);
+			//while(true) {}
 			
 		}catch(SocketTimeoutException e){
 			System.out.println("\tYour Server takes over 3 seconds to answer");

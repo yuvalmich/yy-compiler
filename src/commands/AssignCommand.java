@@ -38,8 +38,10 @@ public class AssignCommand implements Command {
 			BindValue bindedValue = VarBindings.programVars.get(varName);
 			bindedValue.value = varValue;
 			
+			int value = (int)Math.round(bindedValue.value);
+			
 			if (bindedValue.sim != null) {
-				SimulatorConnector.sendCommand("set " + bindedValue.sim + " " + bindedValue.value);
+				SimulatorConnector.sendCommand("set " + bindedValue.sim + " " + value);
 			}
 			
 		} catch (Exception e) {

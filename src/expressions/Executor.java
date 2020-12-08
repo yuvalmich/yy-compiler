@@ -1,9 +1,13 @@
 package expressions;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
+import java.util.stream.Stream;
+
+import utils.VarBindings;
 
 public class Executor {
 	static HashMap<String, String> parameters;
@@ -12,18 +16,20 @@ public class Executor {
 		Queue<String> queue = new LinkedList<String>();
 		Stack<String> stack = new Stack<String>();
 		Stack<Expression> stackExp = new Stack<Expression>();
-		parameters = new HashMap<String, String>();
-		parameters.put("h0", "15");
-		parameters.put("heading", "30");
 		
 		String[] split = expression.split("(?<=[-+*/()<>])|(?=[-+*/()<>])");
+		if (split[0].contentEquals("-"))
+		{
+			String[] arr = {"0"};
+			split = Stream.concat(Arrays.stream(arr), Arrays.stream(split)).toArray(String[]::new);
+		}
 		for (String s : split){
 			if (isDouble(s)){
 				queue.add(s);
 			}
 			if (isParameter(s))
 			{
-				queue.add(parameters.get(s));
+				queue.add(String.valueOf(VarBindings.programVars.get(s).value));
 			}
 			else{
 				switch(s) {
@@ -100,6 +106,6 @@ public class Executor {
 	
 	private static boolean isParameter(String val)
 	{
-		return parameters.containsKey(val);
+		return VarBindings.programVars.containsKey(val);
 	}
 }

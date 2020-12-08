@@ -3,6 +3,7 @@ package interpreter;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import expressions.Executor;
 import utils.ClientHandler;
 import utils.DataReaderServer;
 import utils.MyClientHandler;
@@ -30,14 +31,15 @@ public class Program {
 				"var alt = bind \"/instrumentation/altimeter/indicated-altitude-ft\"\r\n" + 
 				"breaks = 0\r\n" + 
 				"throttle = 1\r\n" + 
+				"rudder = -1\r\n" +
 				"var h0 = heading\r\n" + 
 				"";
 		
 		
-		String easierCode = "openDataServer 5400 10\r\n";
-		
+		String easierCode = "connect 127.0.0.1 5402\r\n" + "var heading = bind \"/instrumentation/heading-indicator/offset-deg\"\r\n" + "var h0 = heading\r\n";
+
 		Lexer lexer = new Lexer();
-		var expressions = lexer.lexer(easierCode);
+		var expressions = lexer.lexer(exampleCode);
 		
 		System.out.println(expressions);
 		

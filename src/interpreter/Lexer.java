@@ -28,7 +28,7 @@ public class Lexer {
 	
 	public String[] lexer(String code)
 	{
-		var splits = code.trim().split("\\s+");
+		var splits = code.trim().replaceAll("\"", "").split("\\s+");
 		
 		for (String split : splits) {
 			initialize(split);
